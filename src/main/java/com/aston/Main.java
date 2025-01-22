@@ -1,65 +1,30 @@
 package com.aston;
-import com.aston.lesson_3.*;
+
+import com.aston.lesson_5.Park;
+import com.aston.lesson_5.Person;
+import com.aston.lesson_5.Park.Attraction;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Задание 1:");
-        Task1 task1 = new Task1();
-        task1.printThreeWords();
+        Person person1 = new Person("Полякова Алина Юрьевна", "Developer", "alina@inbox.com", "+375441732494", 300000, 32);
+        person1.printPerson();
 
-        System.out.println("Задание 2:");
-        Task2 task2 = new Task2();
-        task2.checkSumSign();
+        Person[] person = new Person[5];
+        person[0] = new Person("Иванов Иван Иванович", "Engineer", "ivanov@inbox.com", "+375445674774", 30000, 30);
+        person[1] = new Person("Петров Петр Петрович", "Developer", "petrov@inbox.com", "+375445674440", 50000, 45);
+        person[2] = new Person("Сидоров Олег Олегович", "Developer", "sidorov@inbox.com", "+3754489773428", 70000, 50);
+        person[3] = new Person("Федоров Федор Федорович", "Developer", "fedorov@inbox.com", "+375446444420", 60000, 25);
+        person[4] = new Person("Смирнов Максим Максимович", "Analyst", "smirnov@inbox.com", "+375445444485", 40000, 42);
 
-        System.out.println("Задание 3:");
-        Task3 task3 = new Task3();
-        task3.printColor();
+        System.out.println("-------------------------------------");
 
-        System.out.println("Задание 4");
-        Task4 task4 = new Task4();
-        task4.compareNumber();
+        Park park = new Park("Гомельский парк", "Гомельский парк атракционов");
+        Attraction rollerCoaster = park.new Attraction("Американские горки", "09:00 AM - 9:00 PM", 15.0);
+        Attraction ferrisWheel = park.new Attraction("Колесо обозрения", "9:00 AM - 09:00 PM", 10.0);
+        Attraction littleTrain = park.new Attraction("Паравозик", "09:00 AM - 09:00 PM", 4.0);
 
-        System.out.println("Задание 5");
-        Task5 task5 = new Task5();
-        System.out.println(task5.withinRange(10, 20));
-
-        System.out.println("Задание 6");
-        Task6 task6 = new Task6();
-        task6.printIsPositive(-20);
-
-        System.out.println("Задание 7");
-        Task7 task7 = new Task7();
-        System.out.println(task7.isNegative(-20));
-
-        System.out.println("Задание 8");
-        Task8 task8 = new Task8();
-        task8.printString("Сегодня 16 января 2025", 3);
-
-        System.out.println("Задание 9");
-        Task9 task9 = new Task9();
-        System.out.println(task9.isLeapYear(2100));
-
-        System.out.println("Задание 10");
-        Task10 task10 = new Task10();
-        int[] array = {1, 1, 0, 0, 1, 0, 1, 1};
-        task10.replaceArrayElements(array);
-
-        System.out.println("Задание 11");
-        Task11 task11 = new Task11();
-        task11.fillArray();
-
-        System.out.println("Задание 12");
-        Task12 task12 = new Task12();
-        task12.replaceArrayElements();
-
-        System.out.println();
-        System.out.println("Задание 13");
-        Task13 task13 = new Task13();
-        task13.printArray();
-
-        System.out.println("Задание 14");
-        Task14 task14 = new Task14();
-        task14.createArray(4, 25);
+        rollerCoaster.printInfo();
+        ferrisWheel.printInfo();
+        littleTrain.printInfo();
     }
-
 }
