@@ -1,8 +1,5 @@
 package com.aston;
-import com.aston.lesson_6.Animal;
-import com.aston.lesson_6.Cat;
-import com.aston.lesson_6.Dog;
-import com.aston.lesson_6.Plate;
+import com.aston.lesson_6.*;
 
 import java.util.Scanner;
 
@@ -51,5 +48,19 @@ public class Main {
         } else {
             System.out.println("Остаток еды в тарелке: " + plate.leftoverFood(catArray, foodPlate) + ". Коты сыты.");
         }
+
+        System.out.println("Фигуры");
+        Figure circle = new Circle(4, "White", "Black");
+        Figure rectangle = new Rectangle(3, 7, "Pink", "Green");
+        Figure triangle = new Triangle(3, 4, 5, "Yellow", "Blue");
+
+        System.out.println("Круг:");
+        circle.printCharacteristics();
+
+        System.out.println("\nПрямоугольник:");
+        rectangle.printCharacteristics();
+
+        System.out.println("\nТреугольник:");
+        triangle.printCharacteristics();
     }
 }
