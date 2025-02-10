@@ -2,6 +2,8 @@ package com.aston.lesson_12;
 
 public class FactorialNumber {
     long factorial;
+    
+    //lesson12 junit, testng
 
     public long getFactorial(int number) {
         if (number < 0)
