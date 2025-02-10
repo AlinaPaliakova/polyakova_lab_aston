@@ -3,8 +3,6 @@ package com.aston.lesson_12;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
