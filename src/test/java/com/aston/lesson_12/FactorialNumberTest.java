@@ -35,4 +35,5 @@ class FactorialNumberTest {
         assertEquals(3628800, factorialNumber.getFactorial(10));
     }
 
+
 }
