@@ -1,14 +1,17 @@
 package com.aston.lesson_15;
 
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
 import java.time.Duration;
 
+@Epic("Функциональное тестирование MTS.by")
+@Feature("Проверка плейсхолдеров")
 public class MtsByTests1 {
     private WebDriver driver;
     private HomePage homePage;
@@ -16,7 +19,7 @@ public class MtsByTests1 {
 
     @BeforeClass
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Admin\\IdeaProjects\\polyakova_aston_lab\\src\\test\\java\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://mts.by");
@@ -38,72 +41,76 @@ public class MtsByTests1 {
         }
     }
 
-    @Test(priority = 1)
-    public void checkServicesPlanPlaceholders() throws InterruptedException {
+    @DataProvider(name = "servicePlans")
+    public Object[][] createServicePlanData() {
+        return new Object[][]{
+                {"connection-sum", "Сумма", "connection-email", "E-mail для отправки чека"}
+        };
+    }
+
+    @Test(priority = 1, dataProvider = "servicePlans")
+    @Epic("Проверка плейсхолдеров плана услуг")
+    @DisplayName("Проверка плейсхолдеров плана услуг")
+    @Description("Проверка, что плейсхолдеры для плана услуг отображаются правильно")
+    @Severity(SeverityLevel.CRITICAL)
+    public void checkServicesPlanPlaceholders(String sumFieldId, String expectedSumPlaceholder, String emailFieldId, String expectedEmailPlaceholder) throws InterruptedException {
         action.scrollToElement(driver.findElement(By.className("pay__partners")));
         action.moveToElement(driver.findElement(By.className("select__now"))).build().perform();
-
-        Assert.assertTrue(homePage.isServicesPlanSelectedDisplayed(), "План 'Услуги связи' is selected by default");
-
-        Assert.assertTrue(homePage.isNumberPhonePlaceholderServicesDisplayed(), "Placeholder 'Номер телефона' is present");
-
-        WebElement inputSummaServices = driver.findElement(By.id("connection-sum"));
+        Assert.assertTrue(homePage.isServicesPlanSelectedDisplayed(), "План 'Услуги связи' выбран по умолчанию");
+        Assert.assertTrue(homePage.isNumberPhonePlaceholderServicesDisplayed(), "Плейсхолдер 'Номер телефона' присутствует");
+        WebElement inputSummaServices = driver.findElement(By.id(sumFieldId));
         String placeholderServicesValue = inputSummaServices.getAttribute("placeholder");
-        String expectedPlaceholderServicesValue = "Сумма";
-        Assert.assertEquals(placeholderServicesValue, expectedPlaceholderServicesValue, "Значение placeholder Сумма не соответствует ожидаемому.");
-        // Проверка правильности значения placeholder 'E-mail для отправки чека'
-        WebElement inputEmail = driver.findElement(By.id("connection-email"));
+        Assert.assertEquals(placeholderServicesValue, expectedSumPlaceholder, "Значение плейсхолдера 'Сумма' не соответствует ожидаемому.");
+        WebElement inputEmail = driver.findElement(By.id(emailFieldId));
         String emailPlaceholderValue = inputEmail.getAttribute("placeholder");
-        String expectedEmailPlaceholderValue = "E-mail для отправки чека";
-        Assert.assertEquals(emailPlaceholderValue, expectedEmailPlaceholderValue, "Значение placeholder E-mail не соответствует ожидаемому.");
+        Assert.assertEquals(emailPlaceholderValue, expectedEmailPlaceholder, "Значение плейсхолдера 'E-mail' не соответствует ожидаемому.");
     }
 
     @Test(priority = 2)
+    @Epic("Проверка плейсхолдеров плана Домашний интернет")
+    @DisplayName("Проверка плейсхолдеров плана Домашний интернет")
+    @Description("Проверка, что плейсхолдеры для плана Домашний интернет отображаются правильно")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkHomeInternetPlanPlaceholders() throws InterruptedException {
-
         action.moveToElement(driver.findElement(By.className("select__now"))).build().perform();
         driver.findElement(By.xpath("//span[@class='select__now']")).click();
         Thread.sleep(2000);
-
         driver.findElement(By.xpath("//li[@class='select__item']/p[text()='Домашний интернет']")).click();
         Thread.sleep(2000);
-
-        Assert.assertTrue(homePage.isNumberInternetHomePlaceholderDisplayed(), "Placeholder 'Номер абонента' is present");
-
-        Assert.assertTrue(homePage.isSummaInternetHomePlaceholderDisplayed(), "Placeholder 'Сумма' is present");
-
-        Assert.assertTrue(homePage.isEmailInternetHomePlaceholderDisplayed(), "Placeholder 'E-mail для отправки чека' is present");
+        Assert.assertTrue(homePage.isNumberInternetHomePlaceholderDisplayed(), "Плейсхолдер 'Номер абонента' присутствует");
+        Assert.assertTrue(homePage.isSummaInternetHomePlaceholderDisplayed(), "Плейсхолдер 'Сумма' присутствует");
+        Assert.assertTrue(homePage.isEmailInternetHomePlaceholderDisplayed(), "Плейсхолдер 'E-mail для отправки чека' присутствует");
     }
 
     @Test(priority = 3)
+    @Epic("Проверка плейсхолдеров плана Рассрочка")
+    @DisplayName("Проверка плейсхолдеров плана Рассрочка")
+    @Description("Проверка, что плейсхолдеры для плана Рассрочка отображаются правильно")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkInstalmentPlanPlaceholders() throws InterruptedException {
         action.moveToElement(driver.findElement(By.className("select__now"))).build().perform();
         driver.findElement(By.xpath("//span[@class='select__now']")).click();
         Thread.sleep(2000);
-
         driver.findElement(By.xpath("//li[@class='select__item']/p[text()='Рассрочка']")).click();
         Thread.sleep(2000);
-
-        Assert.assertTrue(homePage.isNumberAccountPlaceholderDisplayed(), "Placeholder 'Номер счета на 44' is present");
-
-        Assert.assertTrue(homePage.isSummaPlaceholderDisplayed(), "Placeholder 'Сумма' is present");
-
-        Assert.assertTrue(homePage.isEmailPlaceholderDisplayed(), "Placeholder 'E-mail для отправки чека' is present");
+        Assert.assertTrue(homePage.isNumberAccountPlaceholderDisplayed(), "Плейсхолдер 'Номер счета на 44' присутствует");
+        Assert.assertTrue(homePage.isSummaPlaceholderDisplayed(), "Плейсхолдер 'Сумма' присутствует");
+        Assert.assertTrue(homePage.isEmailPlaceholderDisplayed(), "Плейсхолдер 'E-mail для отправки чека' присутствует");
     }
 
     @Test(priority = 4)
+    @Epic("Проверка плейсхолдеров плана Задолженность")
+    @DisplayName("Проверка плейсхолдеров плана Задолженность")
+    @Description("Проверка, что плейсхолдеры для плана Задолженность отображаются правильно")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkArrearsPlanPlaceholders() throws InterruptedException {
         action.moveToElement(driver.findElement(By.className("select__now"))).build().perform();
         driver.findElement(By.xpath("//span[@class='select__now']")).click();
         Thread.sleep(2000);
-
         driver.findElement(By.xpath("//li[@class='select__item']/p[text()='Задолженность']")).click();
         Thread.sleep(2000);
-
-        Assert.assertTrue(homePage.isNumberAccountArrearsPlaceholderDisplayed(), "Placeholder 'Номер счета на 2073' is present");
-
-        Assert.assertTrue(homePage.isSummaArrearsPlaceholderDisplayed(), "Placeholder 'Сумма' is present");
-
-        Assert.assertTrue(homePage.isEmailArrearsPlaceholderDisplayed(), "Placeholder 'E-mail для отправки чека' is present");
+        Assert.assertTrue(homePage.isNumberAccountArrearsPlaceholderDisplayed(), "Плейсхолдер 'Номер счета на 2073' присутствует");
+        Assert.assertTrue(homePage.isSummaArrearsPlaceholderDisplayed(), "Плейсхолдер 'Сумма' присутствует");
+        Assert.assertTrue(homePage.isEmailArrearsPlaceholderDisplayed(), "Плейсхолдер 'E-mail для отправки чека' присутствует");
     }
 }
